@@ -42,6 +42,7 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
                 <option value="youtube"><?php echo get_phrase('youtube'); ?></option>
                 <option value="vimeo"><?php echo get_phrase('vimeo'); ?></option>
                 <option value="html5">HTML5</option>
+                <option value="bunny">Bunny.net Stream</option>
             </select>
         </div>
 
@@ -107,9 +108,13 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
     </form>
     <script type="text/javascript">
     $(document).ready(function() {
-        initSelect2(['#section_id','#lesson_type', '#lesson_provider']);
-        initTimepicker();
-    });
+            initSelect2(['#section_id','#lesson_type', '#lesson_provider']);
+            initTimepicker();
+            
+            // Gọi hàm này ngay khi load để đảm bảo form hiển thị đúng nếu đang edit hoặc load lại
+            var provider = $('#lesson_provider').val();
+            check_video_provider(provider);
+        });
     function ajax_get_video_details(video_url) {
         $('#perloader').show();
         if(checkURLValidity(video_url)){
@@ -162,15 +167,26 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
     }
 
     function check_video_provider(provider) {
+        // 1. Nếu chọn Youtube hoặc Vimeo
         if (provider === 'youtube' || provider === 'vimeo') {
-            $('#html5').hide();
-            $('#youtube_vimeo').show();
-        }else if(provider === 'html5'){
-            $('#youtube_vimeo').hide();
-            $('#html5').show();
-        }else {
+            $('#html5').hide();           // Ẩn form HTML5
+            $('#youtube_vimeo').show();   // Hiện form Youtube
+        } 
+        // 2. Nếu chọn HTML5 HOẶC Bunny
+        else if(provider === 'html5' || provider === 'bunny') {
+            $('#youtube_vimeo').hide();   // Ẩn form Youtube
+            $('#html5').show();           // HIỆN FORM HTML5 (Chứa ô nhập URL)
+        } 
+        // 3. Khác
+        else {
             $('#youtube_vimeo').hide();
             $('#html5').hide();
         }
     }
+
+        // Kích hoạt ngay khi mở form để reset trạng thái
+    $(document).ready(function() {
+        $('#youtube_vimeo').hide();
+        $('#html5').hide();
+    });
 </script>

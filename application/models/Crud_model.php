@@ -738,7 +738,7 @@ class Crud_model extends CI_Model {
 
                 $video_details = $this->video_model->getVideoDetails($data['video_url']);
                 $data['video_type'] = $video_details['provider'];
-            }elseif ($lesson_provider == 'html5') {
+            }elseif ($lesson_provider == 'html5' || $lesson_provider == 'bunny') {
                 if ($this->input->post('html5_video_url') == "" || $this->input->post('html5_duration') == "") {
                     $this->session->set_flashdata('error_message',get_phrase('invalid_lesson_url_and_duration'));
                     redirect(site_url(strtolower($this->session->userdata('role')).'/course_form/course_edit/'.$data['course_id']), 'refresh');
@@ -749,7 +749,7 @@ class Crud_model extends CI_Model {
                 $min = sprintf('%02d', $duration_formatter[1]);
                 $sec = sprintf('%02d', $duration_formatter[2]);
                 $data['duration'] = $hour.':'.$min.':'.$sec;
-                $data['video_type'] = 'html5';
+                $data['video_type'] = $lesson_provider;
             }else {
                 $this->session->set_flashdata('error_message',get_phrase('invalid_lesson_provider'));
                 redirect(site_url(strtolower($this->session->userdata('role')).'/course_form/course_edit/'.$data['course_id']), 'refresh');
@@ -817,7 +817,7 @@ class Crud_model extends CI_Model {
 
                 $video_details = $this->video_model->getVideoDetails($data['video_url']);
                 $data['video_type'] = $video_details['provider'];
-            }elseif ($lesson_provider == 'html5') {
+            }elseif ($lesson_provider == 'html5' || $lesson_provider == 'bunny') {
                 if ($this->input->post('html5_video_url') == "" || $this->input->post('html5_duration') == "") {
                     $this->session->set_flashdata('error_message',get_phrase('invalid_lesson_url_and_duration'));
                     redirect(site_url(strtolower($this->session->userdata('role')).'/course_form/course_edit/'.$data['course_id']), 'refresh');
@@ -829,7 +829,7 @@ class Crud_model extends CI_Model {
                 $min = sprintf('%02d', $duration_formatter[1]);
                 $sec = sprintf('%02d', $duration_formatter[2]);
                 $data['duration'] = $hour.':'.$min.':'.$sec;
-                $data['video_type'] = 'html5';
+                $data['video_type'] = $lesson_provider;
 
                 if ($_FILES['thumbnail']['name'] != "") {
                     if (!file_exists('uploads/thumbnails/lesson_thumbnails')) {
