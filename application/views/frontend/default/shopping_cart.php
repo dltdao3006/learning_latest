@@ -99,7 +99,10 @@
                         <span class="original-price"><?php echo currency($actual_price); ?></span>
                         <!-- <span class="discount-rate">95% off</span> -->
                     </div>
-                    <button type="button" class="btn btn-primary btn-block checkout-btn" onclick="handleCheckOut()"><?php echo get_phrase('checkout'); ?></button>
+                    <!-- <button type="button" class="btn btn-primary btn-block checkout-btn" onclick="handleCheckOut()"><?php echo get_phrase('checkout'); ?></button> -->
+                    <a href="https://zalo.me/0942457778" target="_blank" class="btn btn-primary btn-block" style="background-color: #0088ff; border-color: #0088ff;">
+    <i class="fas fa-comments"></i> Liên hệ CSKH để kích hoạt
+</a>
                 </div>
             </div>
         </div>

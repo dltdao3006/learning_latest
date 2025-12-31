@@ -68,8 +68,8 @@ class Crud_model extends CI_Model {
                 $data['font_awesome_class'] = 'fas fa-chess';
             }
             // category thumbnail adding
-            if (!file_exists('uploads/category_thumbnails')) {
-                mkdir('uploads/category_thumbnails', 0777, true);
+            if (!file_exists('uploads/thumbnails/category_thumbnails')) {
+                mkdir('uploads/thumbnails/category_thumbnails', 0777, true);
             }
             if ($_FILES['category_thumbnail']['name'] != "") {
                 $data['thumbnail'] = md5(rand(10000000, 20000000)).'.jpg';

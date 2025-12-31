@@ -85,54 +85,58 @@ $course_details = $this->crud_model->get_course_by_id($course_id)->row_array();
                     // If the lesson type is video
                     // i am checking the null and empty values because of the existing users does not have video in all video lesson as type
                     if($lesson_details['lesson_type'] == 'video' || $lesson_details['lesson_type'] == '' || $lesson_details['lesson_type'] == NULL):
-                        $video_url = $lesson_details['video_url'];
-                        $provider = $lesson_details['video_type'];
-                        ?>
+                            $video_url = $lesson_details['video_url'];
+                            $provider = $lesson_details['video_type'];
+                            
+                            // KIỂM TRA BUNNY STREAM (Logic mới)
+                            $is_bunny = ($provider == 'bunny' || strpos($video_url, 'mediadelivery.net') !== false);
+                            ?>
 
-                        <!-- If the video is youtube video -->
-                        <?php if (strtolower($provider) == 'youtube'): ?>
-                            <!------------- PLYR.IO ------------>
-                            <link rel="stylesheet" href="<?php echo base_url();?>assets/global/plyr/plyr.css">
-
-                            <div class="plyr__video-embed" id="player">
-                                <iframe height="500" src="<?php echo $video_url;?>?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe>
+                        <?php if ($is_bunny): ?>
+                            <div class="bunny-player-wrapper" style="width: 100%; margin: 0 auto; background-color: #000; border-radius: 6px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+                                
+                                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                                    <iframe 
+                                        src="<?php echo $video_url; ?>" 
+                                        loading="lazy" 
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
+                                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" 
+                                        allowfullscreen="true">
+                                    </iframe>
+                                </div>
                             </div>
 
-                            <script src="<?php echo base_url();?>assets/global/plyr/plyr.js"></script>
-                            <script>const player = new Plyr('#player');</script>
-                            <!------------- PLYR.IO ------------>
-
-                        <!-- If the video is vimeo video -->
-                        <?php elseif (strtolower($provider) == 'vimeo'):
-                            $video_details = $this->video_model->getVideoDetails($video_url);
-                            $video_id = $video_details['video_id'];?>
-                            <!------------- PLYR.IO ------------>
-                            <link rel="stylesheet" href="<?php echo base_url();?>assets/global/plyr/plyr.css">
-                            <div class="plyr__video-embed" id="player">
-                                <iframe height="500" src="https://player.vimeo.com/video/<?php echo $video_id; ?>?loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media" allowfullscreen allowtransparency allow="autoplay"></iframe>
-                            </div>
-
-                            <script src="<?php echo base_url();?>assets/global/plyr/plyr.js"></script>
-                            <script>const player = new Plyr('#player');</script>
-                            <!------------- PLYR.IO ------------>
-
-                        <!-- If the video is html5 video -->
-                        <?php else :?>
-                            <!------------- PLYR.IO ------------>
-                            <link rel="stylesheet" href="<?php echo base_url();?>assets/global/plyr/plyr.css">
-                            <video poster="<?php echo $lesson_thumbnail_url;?>" id="player" playsinline controls>
-                            <?php if (get_video_extension($video_url) == 'mp4'): ?>
-                                <source src="<?php echo $video_url; ?>" type="video/mp4">
-                                <?php elseif (get_video_extension($video_url) == 'webm'): ?>
-                                    <source src="<?php echo $video_url; ?>" type="video/webm">
-                                    <?php else: ?>
-                                        <h4><?php get_phrase('video_url_is_not_supported'); ?></h4>
-                                    <?php endif; ?>
-                                </video>
-
+                            <?php elseif (strtolower($provider) == 'youtube'): ?>
+                                <link rel="stylesheet" href="<?php echo base_url();?>assets/global/plyr/plyr.css">
+                                <div class="plyr__video-embed" id="player">
+                                    <iframe height="500" src="<?php echo $video_url;?>?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe>
+                                </div>
                                 <script src="<?php echo base_url();?>assets/global/plyr/plyr.js"></script>
                                 <script>const player = new Plyr('#player');</script>
-                                <!------------- PLYR.IO ------------>
+
+                            <?php elseif (strtolower($provider) == 'vimeo'):
+                                $video_details = $this->video_model->getVideoDetails($video_url);
+                                $video_id = $video_details['video_id'];?>
+                                <link rel="stylesheet" href="<?php echo base_url();?>assets/global/plyr/plyr.css">
+                                <div class="plyr__video-embed" id="player">
+                                    <iframe height="500" src="https://player.vimeo.com/video/<?php echo $video_id; ?>?loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media" allowfullscreen allowtransparency allow="autoplay"></iframe>
+                                </div>
+                                <script src="<?php echo base_url();?>assets/global/plyr/plyr.js"></script>
+                                <script>const player = new Plyr('#player');</script>
+
+                            <?php else :?>
+                                <link rel="stylesheet" href="<?php echo base_url();?>assets/global/plyr/plyr.css">
+                                <video poster="<?php echo $lesson_thumbnail_url;?>" id="player" playsinline controls>
+                                    <?php if (get_video_extension($video_url) == 'mp4'): ?>
+                                        <source src="<?php echo $video_url; ?>" type="video/mp4">
+                                    <?php elseif (get_video_extension($video_url) == 'webm'): ?>
+                                        <source src="<?php echo $video_url; ?>" type="video/webm">
+                                    <?php else: ?>
+                                        <source src="<?php echo $video_url; ?>" type="video/mp4">
+                                    <?php endif; ?>
+                                </video>
+                                <script src="<?php echo base_url();?>assets/global/plyr/plyr.js"></script>
+                                <script>const player = new Plyr('#player');</script>
                             <?php endif; ?>
                     <?php elseif ($lesson_details['lesson_type'] == 'quiz'): ?>
                         <div class="mt-5">

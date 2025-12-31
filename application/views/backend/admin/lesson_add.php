@@ -46,8 +46,6 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
             </select>
         </div>
 
-
-
         <div class="" id = "youtube_vimeo" style="display: none;">
             <div class="form-group">
                 <label><?php echo get_phrase('video_url'); ?></label>
@@ -65,7 +63,7 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
         <div class="" id = "html5" style="display: none;">
             <div class="form-group">
                 <label><?php echo get_phrase('video_url'); ?></label>
-                <input type="text" id = "html5_video_url" name = "html5_video_url" class="form-control">
+                <input type="text" id = "html5_video_url" name = "html5_video_url" class="form-control" placeholder="Dán link iframe hoặc .m3u8 vào đây">
             </div>
 
             <div class="form-group">
@@ -100,21 +98,27 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
     <div class="form-group">
         <label><?php echo get_phrase('summary'); ?></label>
         <textarea name="summary" class="form-control"></textarea>
-        </div>
+    </div>
 
-        <div class="text-center">
-            <button class = "btn btn-success" type="submit" name="button"><?php echo get_phrase('add_lesson'); ?></button>
-        </div>
-    </form>
-    <script type="text/javascript">
+    <div class="text-center">
+        <button class = "btn btn-success" type="submit" name="button"><?php echo get_phrase('add_lesson'); ?></button>
+    </div>
+</form>
+
+<script type="text/javascript">
     $(document).ready(function() {
-            initSelect2(['#section_id','#lesson_type', '#lesson_provider']);
-            initTimepicker();
-            
-            // Gọi hàm này ngay khi load để đảm bảo form hiển thị đúng nếu đang edit hoặc load lại
-            var provider = $('#lesson_provider').val();
-            check_video_provider(provider);
-        });
+        initSelect2(['#section_id','#lesson_type', '#lesson_provider']);
+        initTimepicker();
+
+        // Ẩn mặc định
+        $('#youtube_vimeo').hide();
+        $('#html5').hide();
+        
+        // Kiểm tra ngay khi load (đề phòng trường hợp form giữ lại giá trị cũ)
+        var provider = $('#lesson_provider').val();
+        check_video_provider(provider);
+    });
+
     function ajax_get_video_details(video_url) {
         $('#perloader').show();
         if(checkURLValidity(video_url)){
@@ -133,7 +137,6 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
             $('#invalid_url').show();
             $('#perloader').hide();
             jQuery('#duration').val('');
-
         }
     }
 
@@ -167,26 +170,17 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
     }
 
     function check_video_provider(provider) {
-        // 1. Nếu chọn Youtube hoặc Vimeo
         if (provider === 'youtube' || provider === 'vimeo') {
-            $('#html5').hide();           // Ẩn form HTML5
-            $('#youtube_vimeo').show();   // Hiện form Youtube
+            $('#html5').hide();
+            $('#youtube_vimeo').show();
         } 
-        // 2. Nếu chọn HTML5 HOẶC Bunny
         else if(provider === 'html5' || provider === 'bunny') {
-            $('#youtube_vimeo').hide();   // Ẩn form Youtube
-            $('#html5').show();           // HIỆN FORM HTML5 (Chứa ô nhập URL)
+            $('#youtube_vimeo').hide();
+            $('#html5').show();
         } 
-        // 3. Khác
         else {
             $('#youtube_vimeo').hide();
             $('#html5').hide();
         }
     }
-
-        // Kích hoạt ngay khi mở form để reset trạng thái
-    $(document).ready(function() {
-        $('#youtube_vimeo').hide();
-        $('#html5').hide();
-    });
 </script>

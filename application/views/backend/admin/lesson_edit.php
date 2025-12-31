@@ -43,12 +43,11 @@
                 <option value="youtube" <?php if(strtolower($lesson_details['video_type']) == 'youtube') echo 'selected'; ?>><?php echo get_phrase('youtube'); ?></option>
                 <option value="vimeo" <?php if(strtolower($lesson_details['video_type']) == 'vimeo') echo 'selected'; ?>><?php echo get_phrase('vimeo'); ?></option>
                 <option value="html5" <?php if(strtolower($lesson_details['video_type']) == 'html5') echo 'selected'; ?>>HTML5</option>
-                <option value="bunny" <?php if(strtolower($lesson_details['video_type']) == 'bunny') echo 'selected'; ?>>bunny</option>
+                <option value="bunny" <?php if(strtolower($lesson_details['video_type']) == 'bunny') echo 'selected'; ?>>Bunny.net Stream</option>
             </select>
         </div>
 
         <div class="" id = "youtube_vimeo" <?php if(strtolower($lesson_details['video_type']) == 'vimeo' || strtolower($lesson_details['video_type']) == 'youtube'):?>  <?php else: ?> style="display: none;" <?php endif; ?>>
-
             <div class="form-group">
                 <label><?php echo get_phrase('video_url'); ?></label>
                 <input type="text" id = "video_url" name = "video_url" class="form-control" onblur="ajax_get_video_details(this.value)"  value="<?php echo $lesson_details['video_url']; ?>">
@@ -114,7 +113,8 @@ $(document).ready(function() {
     initSelect2(['#section_id','#lesson_type', '#lesson_provider']);
     initTimepicker();
     show_lesson_type_form($('#lesson_type').val());
-    // THÊM DÒNG NÀY ĐỂ HIỂN THỊ ĐÚNG FORM KHI MỞ TRANG EDIT
+    
+    // Gọi hàm kiểm tra ngay khi load để hiện đúng form Bunny/HTML5
     check_video_provider($('#lesson_provider').val());
 });
 
@@ -184,10 +184,10 @@ function check_video_provider(provider) {
         $('#html5').hide();
         $('#youtube_vimeo').show();
     } 
-    // Nếu là HTML5 HOẶC Bunny (Sửa ở đây)
+    // Nếu là HTML5 HOẶC Bunny
     else if(provider === 'html5' || provider === 'bunny') {
         $('#youtube_vimeo').hide();
-        $('#html5').show(); // Lệnh này sẽ hiển thị ô nhập URL
+        $('#html5').show();
     } 
     // Trường hợp khác
     else {
@@ -195,10 +195,4 @@ function check_video_provider(provider) {
         $('#html5').hide();
     }
 }
-
-    // Kích hoạt ngay khi mở form để reset trạng thái
-$(document).ready(function() {
-    $('#youtube_vimeo').hide();
-    $('#html5').hide();
-});
 </script>
