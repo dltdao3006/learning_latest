@@ -75,3 +75,44 @@
 </div>
 </div>
 <!-- end Topbar -->
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function checkBackendMessages() {
+            if (typeof jQuery !== 'undefined') {
+                jQuery.ajax({
+                    url: '<?php echo site_url('home/get_unread_messages_count'); ?>',
+                    type: 'GET',
+                    success: function(response) {
+                        var count = parseInt(response);
+                        
+                        // 1. Cập nhật Sidebar (Menu trái)
+                        var sidebarBadge = document.getElementById('sidebar_message_badge');
+                        if (sidebarBadge) {
+                            if (!isNaN(count) && count > 0) {
+                                sidebarBadge.innerText = count;
+                                sidebarBadge.style.display = 'inline-block';
+                            } else {
+                                sidebarBadge.style.display = 'none';
+                            }
+                        }
+
+                        // 2. Cập nhật Header (Nếu bạn vẫn giữ icon trên topbar)
+                        var headerBadge = document.getElementById('backend_message_badge');
+                        if (headerBadge) {
+                            if (!isNaN(count) && count > 0) {
+                                headerBadge.innerText = count;
+                                headerBadge.style.display = 'inline-block';
+                            } else {
+                                headerBadge.style.display = 'none';
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        checkBackendMessages();
+        setInterval(checkBackendMessages, 5000);
+    });
+</script>

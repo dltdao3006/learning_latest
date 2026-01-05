@@ -35,7 +35,7 @@
                                     <span class="d-none d-sm-inline"><?php echo get_phrase('social_information'); ?></span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" style="display: none;">
                                 <a href="#payment_info" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                     <i class="mdi mdi-currency-eur mr-1"></i>
                                     <span class="d-none d-sm-inline"><?php echo get_phrase('payment_info'); ?></span>

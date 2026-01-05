@@ -7,7 +7,7 @@
     <li class="has-children">
       <a href="">
         <i class="fas fa-th d-inline"></i>
-        <span><?php echo get_phrase('courses'); ?></span>
+        <span style="font-size: 16px; font-weight: 500;"><?php echo get_phrase('courses'); ?></span>
         <span class="has-sub-category"><i class="fas fa-angle-right"></i></span>
       </a>
 

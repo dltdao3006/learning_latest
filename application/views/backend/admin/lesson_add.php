@@ -40,7 +40,7 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
             <select class="form-control select2" data-toggle="select2" name="lesson_provider" id="lesson_provider" onchange="check_video_provider(this.value)">
                 <option value=""><?php echo get_phrase('select_lesson_provider'); ?></option>
                 <option value="youtube"><?php echo get_phrase('youtube'); ?></option>
-                <option value="vimeo"><?php echo get_phrase('vimeo'); ?></option>
+                <!-- <option value="vimeo"><?php echo get_phrase('vimeo'); ?></option> -->
                 <option value="html5">HTML5</option>
                 <option value="bunny">Bunny.net Stream</option>
             </select>

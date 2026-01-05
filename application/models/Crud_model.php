@@ -1523,6 +1523,41 @@ class Crud_model extends CI_Model {
             $this->db->delete('question');
             return true;
         }
+        // Hàm đếm số tin nhắn chưa đọc của user hiện tại
+    // Hàm đếm số tin nhắn chưa đọc CHUẨN XÁC (Sử dụng JOIN bảng)
+        public function count_unread_messages() {
+            $user_id = $this->session->userdata('user_id');
+            
+            if (empty($user_id)) {
+                return 0;
+            }
+
+            // Logic:
+            // 1. Join bảng 'message' với 'message_thread'
+            // 2. Tìm các thread mà mình là người gửi hoặc người nhận
+            // 3. Đếm các tin nhắn trong đó mà:
+            //    - Người gửi tin nhắn KHÔNG PHẢI là mình (nghĩa là người khác gửi đến)
+            //    - Trạng thái chưa đọc (read_status = 0)
+
+            $this->db->select('message.message_id');
+            $this->db->from('message');
+            $this->db->join('message_thread', 'message.message_thread_code = message_thread.message_thread_code');
+            
+            // Điều kiện 1: Mình phải nằm trong cuộc hội thoại (là sender hoặc receiver của thread)
+            $this->db->group_start();
+            $this->db->where('message_thread.sender', $user_id);
+            $this->db->or_where('message_thread.receiver', $user_id);
+            $this->db->group_end();
+
+            // Điều kiện 2: Tin nhắn đó không phải do mình chat (mình gửi thì không tính là chưa đọc)
+            $this->db->where('message.sender !=', $user_id);
+
+            // Điều kiện 3: Chưa đọc
+            $this->db->where('message.read_status', NULL);
+
+            $query = $this->db->get();
+            return $query->num_rows();
+        }
 
         function get_application_details() {
             $purchase_code = get_settings('purchase_code');
@@ -1596,3 +1631,4 @@ class Crud_model extends CI_Model {
                 return $returnable_array;
             }
         }
+

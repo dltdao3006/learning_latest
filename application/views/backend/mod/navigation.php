@@ -1,7 +1,6 @@
 <?php
 	$status_wise_courses = $this->crud_model->get_status_wise_courses();
  ?>
-<!-- ========== Left Sidebar Start ========== -->
 <div class="left-side-menu left-side-menu-detached">
 	<div class="leftbar-user">
 		<a href="javascript: void(0);">
@@ -13,8 +12,7 @@
 		</a>
 	</div>
 
-	<!--- Sidemenu -->
-		<ul class="metismenu side-nav side-nav-light">
+	<ul class="metismenu side-nav side-nav-light">
 
 			<li class="side-nav-title side-nav-item"><?php echo get_phrase('navigation'); ?></li>
 
@@ -72,12 +70,50 @@
 				</ul>
 			</li>
 
-			<li class="side-nav-item">
-				<a href="<?php echo site_url('mod/message'); ?>" class="side-nav-link <?php if ($page_name == 'message' || $page_name == 'message_new' || $page_name == 'message_read')echo 'active';?>">
-					<i class="dripicons-message"></i>
-					<span><?php echo get_phrase('message'); ?></span>
-				</a>
+            <li class="side-nav-item <?php if ($page_name == 'message') echo 'active'; ?>">
+			    <a href="<?php echo site_url('mod/message'); ?>" class="side-nav-link">
+			        <i class="dripicons-message"></i>
+                    
+                    <span class="badge badge-danger float-right" id="sidebar_message_badge_mod" style="display: none; margin-top: 3px;">0</span>
+			        
+			        <span><?php echo get_phrase('message'); ?></span>
+			    </a>
 			</li>
-		</li>
-	    </ul>
+            
+            <script type="text/javascript">
+                document.addEventListener("DOMContentLoaded", function() {
+                    function updateModSidebarCount() {
+                        var xhr = new XMLHttpRequest();
+                        // Gọi API lấy số tin nhắn
+                        xhr.open('GET', '<?php echo site_url('home/get_unread_messages_count'); ?>', true);
+                        
+                        xhr.onload = function() {
+                            if (xhr.status >= 200 && xhr.status < 300) {
+                                // Lấy số tin nhắn từ phản hồi server
+                                var count = parseInt(xhr.responseText);
+                                var badge = document.getElementById('sidebar_message_badge_mod');
+                                
+                                if (badge) {
+                                    if (!isNaN(count) && count > 0) {
+                                        // Có tin nhắn -> Hiện số & Hiển thị Badge
+                                        badge.innerText = count;
+                                        badge.style.display = 'inline-block'; 
+                                    } else {
+                                        // Không có tin nhắn -> Ẩn Badge
+                                        badge.style.display = 'none'; 
+                                    }
+                                }
+                            }
+                        };
+                        xhr.send();
+                    }
+
+                    // 1. Chạy ngay khi tải trang
+                    updateModSidebarCount();
+                    
+                    // 2. Tự động kiểm tra lại mỗi 5 giây
+                    setInterval(updateModSidebarCount, 5000);
+                });
+            </script>
+            </ul>
 </div>

@@ -10,7 +10,15 @@ $instructor_details = $this->user_model->get_all_user($course_details['user_id']
           <h1 class="title"><?php echo $course_details['title']; ?></h1>
           <p class="subtitle"><?php echo $course_details['short_description']; ?></p>
           <div class="rating-row">
-            <span class="course-badge best-seller"><?php echo ucfirst($course_details['level']); ?></span>
+            
+            <?php 
+                $level_slug = $course_details['level'];
+                if ($level_slug == 'beginner') $level_display = 'Cơ bản';
+                elseif ($level_slug == 'advanced') $level_display = 'Nâng cao';
+                elseif ($level_slug == 'intermediate') $level_display = 'Trung bình';
+                else $level_display = ucfirst($level_slug); 
+            ?>
+            <span class="course-badge best-seller"><?php echo $level_display; ?></span>
             <?php
             $total_rating =  $this->crud_model->get_ratings('course', $course_details['id'], true)->row()->rating;
             $number_of_ratings = $this->crud_model->get_ratings('course', $course_details['id'])->num_rows();
@@ -40,12 +48,23 @@ $instructor_details = $this->user_model->get_all_user($course_details['user_id']
             <?php echo get_phrase('created_by'); ?>
             <a href="<?php echo site_url('home/instructor_page/'.$course_details['user_id']); ?>"><?php echo $instructor_details['first_name'].' '.$instructor_details['last_name']; ?></a>
           </span>
+          
           <?php if ($course_details['last_modified'] > 0): ?>
-            <span class="last-updated-date"><?php echo get_phrase('last_updated').' '.date('D, d-M-Y', $course_details['last_modified']); ?></span>
+            <span class="last-updated-date"><?php echo 'Cập nhật: '.date('d/m/Y', $course_details['last_modified']); ?></span>
           <?php else: ?>
-            <span class="last-updated-date"><?php echo get_phrase('last_updated').' '.date('D, d-M-Y', $course_details['date_added']); ?></span>
+            <span class="last-updated-date"><?php echo 'Cập nhật: '.date('d/m/Y', $course_details['date_added']); ?></span>
           <?php endif; ?>
-          <span class="comment"><i class="fas fa-comment"></i><?php echo ucfirst($course_details['language']); ?></span>
+          
+          <span class="comment">
+            <i class="fas fa-comment"></i>
+            <?php 
+                $lang = $course_details['language'];
+                if ($lang == 'vietnamese') echo 'Tiếng Việt';
+                elseif ($lang == 'english') echo 'Tiếng Anh';
+                else echo ucfirst($lang); 
+            ?>
+          </span>
+
         </div>
       </div>
     </div>
@@ -430,7 +449,7 @@ $instructor_details = $this->user_model->get_all_user($course_details['user_id']
           </li>
           <li><i class="far fa-file"></i><?php echo $this->crud_model->get_lessons('course', $course_details['id'])->num_rows().' '.get_phrase('lessons'); ?></li>
           <li><i class="far fa-compass"></i><?php echo get_phrase('full_lifetime_access'); ?></li>
-          <li><i class="fas fa-mobile-alt"></i><?php echo get_phrase('access_on_mobile_and_tv'); ?></li>
+          <!-- <li><i class="fas fa-mobile-alt"></i><?php echo get_phrase('access_on_mobile_and_tv'); ?></li> -->
         </ul>
       </div>
     </div>

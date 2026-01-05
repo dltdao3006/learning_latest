@@ -9,39 +9,67 @@
             <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
           </ul>
 
-          <a href="<?php echo site_url(''); ?>" class="navbar-brand" href="#"><img src="<?php echo base_url().'uploads/system/logo-dark.png'; ?>" alt="" height="65"></a>
+          <a href="<?php echo site_url(
+            "",
+          ); ?>" class="navbar-brand" href="#"><img src="<?php echo base_url() .
+  "uploads/system/logo-dark.png"; ?>" alt="" height="65"></a>
 
-          <?php include 'menu.php'; ?>
+          <div class="col-auto">
+                <?php include "menu.php"; ?>
+            </div>
 
-          <form class="inline-form" action="<?php echo site_url('home/search'); ?>" method="get" style="width: 100%;">
+          <form class="inline-form" action="<?php echo site_url(
+            "home/search",
+          ); ?>" method="get" style="width: 100%;">
             <div class="input-group search-box mobile-search">
-              <input type="text" name = 'query' class="form-control" placeholder="<?php echo get_phrase('search_for_courses'); ?>">
+              <input type="text" name = 'query' class="form-control" placeholder="<?php echo get_phrase(
+                "search_for_courses",
+              ); ?>">
               <div class="input-group-append">
                 <button class="btn" type="submit"><i class="fas fa-search"></i></button>
               </div>
             </div>
           </form>
 
-          <?php if ($this->session->userdata('admin_login')): ?>
-            <div class="instructor-box menu-icon-box">
-              <div class="icon">
-                <a href="<?php echo site_url('admin'); ?>" style="border: 1px solid transparent; margin: 10px 10px; font-size: 14px; width: 100%; border-radius: 0;"><?php echo get_phrase('administrator'); ?></a>
-              </div>
-            </div>
-          <?php endif; ?>
+         <div class="col-lg-3 col-md-3 col-6">
+          <div class="d-flex justify-content-end align-items-center">
+              
+              <?php
+              // Kiểm tra quyền: Admin hoặc Mod
+              $is_admin = $this->session->userdata("admin_login");
+              $is_mod = $this->session->userdata("mod_login");
+              ?>
 
-          <div class="cart-box menu-icon-box" id = "cart_items">
-            <?php include 'cart_items.php'; ?>
+              <?php if ($is_admin || $is_mod): ?>
+                  
+                  <div class="ml-3">
+                      <a href="<?php echo site_url(
+                        $is_admin ? "admin" : "mod",
+                      ); ?>" class="btn btn-danger py-2 px-3 shadow-sm" style="font-weight: 600; border-radius: 4px;">
+                          <i class="fas fa-user-shield mr-1"></i> 
+                          <?php echo get_phrase(
+                            $is_admin ? "administrator" : "moderator",
+                          ); ?>
+                      </a>
+                  </div>
+
+              <?php else: ?>
+                  
+                  <div class="cart-box menu-icon-box" id = "cart_items">
+                      <?php include "cart_items.php"; ?>
+                  </div>
+
+                  <span class="signin-box-move-desktop-helper"></span>
+                  
+                  <div class="sign-in-box btn-group ml-3">
+                      <a href="<?php echo site_url(
+                        "home/login",
+                      ); ?>" class="btn btn-sign-in"><?php echo get_phrase("log_in",); ?></a>
+                      <a href="<?php echo site_url("home/sign_up",); ?>" class="btn btn-sign-up"><?php echo get_phrase("sign_up",); ?></a>
+                  </div>
+              <?php endif; ?>
           </div>
-
-          <span class="signin-box-move-desktop-helper"></span>
-          <div class="sign-in-box btn-group">
-
-            <a href="<?php echo site_url('home/login'); ?>" class="btn btn-sign-in"><?php echo get_phrase('log_in'); ?></a>
-
-            <a href="<?php echo site_url('home/sign_up'); ?>" class="btn btn-sign-up"><?php echo get_phrase('sign_up'); ?></a>
-
-          </div> <!--  sign-in-box end -->
+        </div>
         </nav>
       </div>
     </div>

@@ -3,7 +3,7 @@
 $course_details = $this->crud_model->get_course_by_id($param2)->row_array();
 $sections = $this->crud_model->get_section('course', $param2)->result_array();
 ?>
-<form action="<?php echo site_url('mod/lessons/'.$param2.'/add'); ?>" method="post" enctype="multipart/form-data">
+<form action="<?php echo site_url('admin/lessons/'.$param2.'/add'); ?>" method="post" enctype="multipart/form-data">
 
     <div class="form-group">
         <label><?php echo get_phrase('title'); ?></label>
@@ -40,12 +40,11 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
             <select class="form-control select2" data-toggle="select2" name="lesson_provider" id="lesson_provider" onchange="check_video_provider(this.value)">
                 <option value=""><?php echo get_phrase('select_lesson_provider'); ?></option>
                 <option value="youtube"><?php echo get_phrase('youtube'); ?></option>
-                <option value="vimeo"><?php echo get_phrase('vimeo'); ?></option>
+                <!-- <option value="vimeo"><?php echo get_phrase('vimeo'); ?></option> -->
                 <option value="html5">HTML5</option>
+                <option value="bunny">Bunny.net Stream</option>
             </select>
         </div>
-
-
 
         <div class="" id = "youtube_vimeo" style="display: none;">
             <div class="form-group">
@@ -64,7 +63,7 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
         <div class="" id = "html5" style="display: none;">
             <div class="form-group">
                 <label><?php echo get_phrase('video_url'); ?></label>
-                <input type="text" id = "html5_video_url" name = "html5_video_url" class="form-control">
+                <input type="text" id = "html5_video_url" name = "html5_video_url" class="form-control" placeholder="Dán link iframe hoặc .m3u8 vào đây">
             </div>
 
             <div class="form-group">
@@ -99,22 +98,32 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
     <div class="form-group">
         <label><?php echo get_phrase('summary'); ?></label>
         <textarea name="summary" class="form-control"></textarea>
-        </div>
+    </div>
 
-        <div class="text-center">
-            <button class = "btn btn-success" type="submit" name="button"><?php echo get_phrase('add_lesson'); ?></button>
-        </div>
-    </form>
-    <script type="text/javascript">
+    <div class="text-center">
+        <button class = "btn btn-success" type="submit" name="button"><?php echo get_phrase('add_lesson'); ?></button>
+    </div>
+</form>
+
+<script type="text/javascript">
     $(document).ready(function() {
         initSelect2(['#section_id','#lesson_type', '#lesson_provider']);
         initTimepicker();
+
+        // Ẩn mặc định
+        $('#youtube_vimeo').hide();
+        $('#html5').hide();
+        
+        // Kiểm tra ngay khi load (đề phòng trường hợp form giữ lại giá trị cũ)
+        var provider = $('#lesson_provider').val();
+        check_video_provider(provider);
     });
+
     function ajax_get_video_details(video_url) {
         $('#perloader').show();
         if(checkURLValidity(video_url)){
             $.ajax({
-                url: '<?php echo site_url('mod/ajax_get_video_details');?>',
+                url: '<?php echo site_url('admin/ajax_get_video_details');?>',
                 type : 'POST',
                 data : {video_url : video_url},
                 success: function(response)
@@ -128,7 +137,6 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
             $('#invalid_url').show();
             $('#perloader').hide();
             jQuery('#duration').val('');
-
         }
     }
 
@@ -165,10 +173,12 @@ $sections = $this->crud_model->get_section('course', $param2)->result_array();
         if (provider === 'youtube' || provider === 'vimeo') {
             $('#html5').hide();
             $('#youtube_vimeo').show();
-        }else if(provider === 'html5'){
+        } 
+        else if(provider === 'html5' || provider === 'bunny') {
             $('#youtube_vimeo').hide();
             $('#html5').show();
-        }else {
+        } 
+        else {
             $('#youtube_vimeo').hide();
             $('#html5').hide();
         }

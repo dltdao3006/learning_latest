@@ -77,9 +77,88 @@ $course_details = $this->crud_model->get_course_by_id($course_id)->row_array();
         <?php if (isset($lesson_id)): ?>
             <div class="col-lg-9" id = "video_player_area">
                 <!-- <div class="" style="background-color: #333;"> -->
-                <div class="" style="text-align: center;">
-                    <?php
-                    $lesson_details = $this->crud_model->get_lessons('lesson', $lesson_id)->row_array();
+<div class="" style="text-align: center; position: relative; overflow: hidden;"> 
+
+        <?php
+            // Lấy thông tin người dùng hiện tại để hiển thị
+            $current_user_id = $this->session->userdata('user_id');
+            // Truy vấn trực tiếp để chắc chắn lấy được Email
+            $user_info_wm = $this->db->get_where('users', array('id' => $current_user_id))->row_array();
+            $wm_text = isset($user_info_wm['email']) ? $user_info_wm['email'] : 'User ID: '.$current_user_id;
+        ?>
+        <div id="dynamic-watermark" class="watermark-overlay">
+            
+
+            <span style="font-size: 12px; font-weight: normal;">bản quyền video thuộc sở hữu của Mỹ Phẩm Vi Sinh Hoa Ngân, cấm sao chép và phát tán dưới mọi hình thức</span>
+            
+
+            <?php echo $wm_text; ?>
+            
+
+            <span style="font-size: 12px; font-weight: normal;"><?php echo date('d/m/Y'); ?></span>
+        </div>
+
+        <style>
+            .watermark-overlay {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                z-index: 9999; /* Đè lên video */
+
+                color: rgba(255, 255, 255, 0.35); /* Màu trắng, độ trong suốt 35% */
+                font-size: 18px;
+                font-weight: 900;
+                font-family: sans-serif;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Tạo bóng để nhìn rõ trên nền sáng */
+
+                pointer-events: none; /* QUAN TRỌNG: Cho phép click xuyên qua để bấm Play/Pause */
+                user-select: none; /* Chống bôi đen copy */
+                white-space: nowrap;
+
+                transition: all 2s ease; /* Hiệu ứng trôi mượt mà khi đổi vị trí */
+            }
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var watermark = document.getElementById("dynamic-watermark");
+                var container = watermark.parentElement; // Chính là thẻ div bao quanh video
+
+                function moveWatermark() {
+                    if (!watermark || !container) return;
+
+                    // Lấy kích thước khung chứa video
+                    var containerWidth = container.offsetWidth;
+                    var containerHeight = container.offsetHeight;
+
+                    // Nếu video chưa load xong height có thể = 0, set chiều cao tối thiểu
+                    if(containerHeight < 300) containerHeight = 400; 
+
+                    var wmWidth = watermark.offsetWidth;
+                    var wmHeight = watermark.offsetHeight;
+
+                    // Tính toán giới hạn tọa độ (trừ đi kích thước watermark để không bị tràn ra ngoài)
+                    var maxX = containerWidth - wmWidth;
+                    var maxY = containerHeight - wmHeight;
+
+                    // Random vị trí mới
+                    var randomX = Math.floor(Math.random() * maxX);
+                    var randomY = Math.floor(Math.random() * maxY);
+
+                    // Gán vị trí
+                    watermark.style.left = randomX + "px";
+                    watermark.style.top = randomY + "px";
+                }
+
+                // Di chuyển ngẫu nhiên mỗi 5 giây
+                setInterval(moveWatermark, 5000);
+
+                // Chạy ngay khi load
+                moveWatermark();
+            });
+        </script>
+        <?php
+        $lesson_details = $this->crud_model->get_lessons('lesson', $lesson_id)->row_array();
                     $lesson_thumbnail_url = $this->crud_model->get_lesson_thumbnail_url($lesson_id);
 
                     // If the lesson type is video
@@ -87,14 +166,14 @@ $course_details = $this->crud_model->get_course_by_id($course_id)->row_array();
                     if($lesson_details['lesson_type'] == 'video' || $lesson_details['lesson_type'] == '' || $lesson_details['lesson_type'] == NULL):
                             $video_url = $lesson_details['video_url'];
                             $provider = $lesson_details['video_type'];
-                            
+
                             // KIỂM TRA BUNNY STREAM (Logic mới)
                             $is_bunny = ($provider == 'bunny' || strpos($video_url, 'mediadelivery.net') !== false);
                             ?>
 
                         <?php if ($is_bunny): ?>
                             <div class="bunny-player-wrapper" style="width: 100%; margin: 0 auto; background-color: #000; border-radius: 6px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
-                                
+
                                 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
                                     <iframe 
                                         src="<?php echo $video_url; ?>" 
@@ -167,3 +246,5 @@ $course_details = $this->crud_model->get_course_by_id($course_id)->row_array();
                 <?php endif; ?>
             </div>
         </div>
+
+ 

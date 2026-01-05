@@ -26,45 +26,57 @@ if (! function_exists('get_settings')) {
 
 if (! function_exists('currency')) {
   function currency($price = "") {
-    $CI	=&	get_instance();
+    $CI =&  get_instance();
     $CI->load->database();
-		if ($price != "") {
-			$CI->db->where('key', 'system_currency');
-			$currency_code = $CI->db->get('settings')->row()->value;
 
-			$CI->db->where('code', $currency_code);
-			$symbol = $CI->db->get('currency')->row()->symbol;
+    // 1. Kiểm tra nếu giá rỗng hoặc bằng 0 thì hiển thị Free/Miễn phí
+    if ($price == "" || $price == 0) {
+        return get_phrase('free');
+    }
 
-			$CI->db->where('key', 'currency_position');
-			$position = $CI->db->get('settings')->row()->value;
+    // 2. Lấy các cài đặt từ Database (Logic cũ của bạn)
+    $CI->db->where('key', 'system_currency');
+    $currency_code = $CI->db->get('settings')->row()->value;
 
-			if ($position == 'right') {
-				return $price.$symbol;
-			}elseif ($position == 'right-space') {
-				return $price.' '.$symbol;
-			}elseif ($position == 'left') {
-				return $symbol.$price;
-			}elseif ($position == 'left-space') {
-				return $symbol.' '.$price;
-			}
-		}
+    $CI->db->where('code', $currency_code);
+    $symbol = $CI->db->get('currency')->row()->symbol;
+
+    $CI->db->where('key', 'currency_position');
+    $position = $CI->db->get('settings')->row()->value;
+
+    // 3. FORMAT SỐ TIỀN (Phần nâng cấp)
+    // 5000000 -> 5.000.000
+    // number_format(số tiền, số thập phân, dấu thập phân, dấu hàng nghìn)
+    $formatted_price = number_format($price, 0, ',', '.');
+
+    // 4. Trả về kết quả tùy theo vị trí hiển thị (Trái/Phải)
+    if ($position == 'right') {
+        return $formatted_price.$symbol;
+    }elseif ($position == 'right-space') {
+        return $formatted_price.' '.$symbol;
+    }elseif ($position == 'left') {
+        return $symbol.$formatted_price;
+    }elseif ($position == 'left-space') {
+        return $symbol.' '. $formatted_price;
+    }
   }
 }
+// ----------------------------------------------------------------------------
 
 if (! function_exists('currency_code_and_symbol')) {
   function currency_code_and_symbol($type = "") {
-    $CI	=&	get_instance();
+    $CI =&  get_instance();
     $CI->load->database();
-		$CI->db->where('key', 'system_currency');
-		$currency_code = $CI->db->get('settings')->row()->value;
+    $CI->db->where('key', 'system_currency');
+    $currency_code = $CI->db->get('settings')->row()->value;
 
-		$CI->db->where('code', $currency_code);
-		$symbol = $CI->db->get('currency')->row()->symbol;
-		if ($type == "") {
-			return $symbol;
-		}else {
-			return $currency_code;
-		}
+    $CI->db->where('code', $currency_code);
+    $symbol = $CI->db->get('currency')->row()->symbol;
+    if ($type == "") {
+      return $symbol;
+    }else {
+      return $currency_code;
+    }
 
   }
 }
@@ -118,6 +130,3 @@ if ( ! function_exists('ellipsis'))
 
 
 
-// ------------------------------------------------------------------------
-/* End of file user_helper.php */
-/* Location: ./system/helpers/common.php */

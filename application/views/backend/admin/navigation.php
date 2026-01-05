@@ -90,11 +90,14 @@
 				</ul>
 			</li>
 
-			<li class="side-nav-item">
-				<a href="<?php echo site_url('admin/message'); ?>" class="side-nav-link <?php if ($page_name == 'message' || $page_name == 'message_new' || $page_name == 'message_read')echo 'active';?>">
-					<i class="dripicons-message"></i>
-					<span><?php echo get_phrase('message'); ?></span>
-				</a>
+			<li class="side-nav-item <?php if ($page_name == 'message') echo 'active'; ?>">
+			    <a href="<?php echo site_url('admin/message'); ?>" class="side-nav-link">
+			        <i class="dripicons-message"></i>
+			        
+			        <span class="badge badge-danger float-right" id="sidebar_message_badge" style="display: none;">0</span>
+			        
+			        <span><?php echo get_phrase('message'); ?></span>
+			    </a>
 			</li>
 
 			<li class="side-nav-item">

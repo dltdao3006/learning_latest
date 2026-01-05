@@ -16,8 +16,9 @@ $user_details = $this->user_model->get_user($this->session->userdata('user_id'))
                         <img src="<?php echo base_url().'uploads/system/logo-dark.png'; ?>" alt="" height="35">
                     </a>
 
-                    <?php include 'menu.php'; ?>
-
+                    <div class="col-auto">
+                        <?php include 'menu.php'; ?>
+                    </div>
 
                     <form class="inline-form" action="<?php echo site_url('home/search'); ?>" method="get" style="width: 100%;">
                         <div class="input-group search-box mobile-search">
@@ -27,14 +28,6 @@ $user_details = $this->user_model->get_user($this->session->userdata('user_id'))
                             </div>
                         </div>
                     </form>
-
-<!--                     <?php if (get_settings('allow_instructor') == 1): ?>
-                        <div class="instructor-box menu-icon-box">
-                            <div class="icon">
-                                <a href="<?php echo site_url('user'); ?>" style="border: 1px solid transparent; margin: 10px 10px; font-size: 14px; width: 100%; border-radius: 0;"><?php echo get_phrase('instructor'); ?></a>
-                            </div>
-                        </div>
-                    <?php endif; ?> -->
 
                     <div class="instructor-box menu-icon-box">
                         <div class="icon">
@@ -50,9 +43,14 @@ $user_details = $this->user_model->get_user($this->session->userdata('user_id'))
                         <?php include 'cart_items.php'; ?>
                     </div>
 
-                    <?php //include 'notifications.php'; ?>
-
-
+                    <div class="menu-icon-box">
+                        <div class="icon">
+                            <a href="<?php echo site_url('home/my_messages'); ?>">
+                                <i class="far fa-envelope"></i>
+                                <span id="message_count_badge" class="badge badge-danger" style="position: absolute; top: 10px; right: -5px; display: none; border-radius: 50%; padding: 3px 6px; font-size: 10px;">0</span>
+                            </a>
+                        </div>
+                    </div>
                     <div class="user-box menu-icon-box">
                         <div class="icon">
                             <a href="javascript::">
@@ -93,7 +91,14 @@ $user_details = $this->user_model->get_user($this->session->userdata('user_id'))
 
                             <li class="user-dropdown-menu-item"><a href="<?php echo site_url('home/my_courses'); ?>"><i class="far fa-gem"></i><?php echo get_phrase('my_courses'); ?></a></li>
                             <li class="user-dropdown-menu-item"><a href="<?php echo site_url('home/my_wishlist'); ?>"><i class="far fa-heart"></i><?php echo get_phrase('my_wishlist'); ?></a></li>
-                            <li class="user-dropdown-menu-item"><a href="<?php echo site_url('home/my_messages'); ?>"><i class="far fa-envelope"></i><?php echo get_phrase('my_messages'); ?></a></li>
+                            
+                            <li class="user-dropdown-menu-item">
+                                <a href="<?php echo site_url('home/my_messages'); ?>">
+                                    <i class="far fa-envelope"></i><?php echo get_phrase('my_messages'); ?>
+                                    <span class="badge badge-danger float-right mt-1" id="dropdown_message_counter" style="display: none; font-size: 10px;">0</span>
+                                </a>
+                            </li>
+
                             <li class="user-dropdown-menu-item"><a href="<?php echo site_url('home/purchase_history'); ?>"><i class="fas fa-shopping-cart"></i><?php echo get_phrase('purchase_history'); ?></a></li>
                             <li class="user-dropdown-menu-item"><a href="<?php echo site_url('home/profile/user_profile'); ?>"><i class="fas fa-user"></i><?php echo get_phrase('user_profile'); ?></a></li>
                             <li class="dropdown-user-logout user-dropdown-menu-item"><a href="<?php echo site_url('login/logout/user'); ?>"><?php echo get_phrase('log_out'); ?></a></li>
@@ -101,20 +106,48 @@ $user_details = $this->user_model->get_user($this->session->userdata('user_id'))
                     </div>
                 </div>
 
-
-
                 <span class="signin-box-move-desktop-helper"></span>
                 <div class="sign-in-box btn-group d-none">
-
                     <button type="button" class="btn btn-sign-in" data-toggle="modal" data-target="#signInModal">Log In</button>
-
                     <button type="button" class="btn btn-sign-up" data-toggle="modal" data-target="#signUpModal">Sign Up</button>
-
-                </div> <!--  sign-in-box end -->
-
+                </div> 
 
             </nav>
         </div>
     </div>
 </div>
 </section>
+
+<script type="text/javascript">
+    function checkUnreadMessages() {
+        $.ajax({
+            url: '<?php echo site_url('home/get_unread_messages_count'); ?>',
+            success: function(response) {
+                var count = parseInt(response);
+                
+                // 1. Cập nhật cho Icon chính trên Header
+                if (count > 0) {
+                    $('#message_count_badge').text(count).show(); 
+                } else {
+                    $('#message_count_badge').hide();
+                }
+
+                // 2. Cập nhật cho dòng chữ trong Menu xổ xuống
+                if (count > 0) {
+                    $('#dropdown_message_counter').text(count).show();
+                } else {
+                    $('#dropdown_message_counter').hide();
+                }
+            },
+            error: function() {
+                // Xử lý nếu lỗi (ví dụ chưa login hoặc url sai)
+                console.log('Error checking messages');
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        checkUnreadMessages(); // Chạy ngay khi load trang
+        setInterval(checkUnreadMessages, 5000); // Check lại mỗi 5 giây
+    });
+</script>

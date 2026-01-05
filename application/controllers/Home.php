@@ -28,6 +28,18 @@ class Home extends CI_Controller {
         $this->load->view('frontend/'.get_frontend_settings('theme').'/index', $page_data);
     }
 
+    // API trả về số lượng tin chưa đọc (Dùng cho Ajax)
+    public function get_unread_messages_count() {
+    // Cho phép User HOẶC Admin HOẶC Mod đều được kiểm tra tin nhắn
+    if ($this->session->userdata('user_login') == 1 || 
+        $this->session->userdata('admin_login') == 1 || 
+        $this->session->userdata('mod_login') == 1) {
+        
+        echo $this->crud_model->count_unread_messages();
+    } else {
+        echo 0;
+    }
+}
     public function shopping_cart() {
         if (!$this->session->userdata('cart_items')) {
             $this->session->set_userdata('cart_items', array());
