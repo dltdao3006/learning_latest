@@ -1,0 +1,1302 @@
+{
+  inprog: [
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409710',
+      connectionId: 24409710,
+      client: '10.244.4.138:42442',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.700+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275422,
+      lsid: {
+        id: UUID("bd0e6565-ca46-4256-84b3-07964a85cd36"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("6"),
+      microsecs_running: Long("6674587"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("cda5905a0de46e4583d1600511683f7f", "hex"), 3),
+              InvoiceCount: [Object]
+            }
+          },
+          { '$group': { _id: 1, n: [Object] } }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("bd0e6565-ca46-4256-84b3-07964a85cd36") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 355,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("357") } },
+        Mutex: { acquireCount: { r: Long("2") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409800',
+      connectionId: 24409800,
+      client: '10.244.8.157:41264',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.700+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390273939,
+      lsid: {
+        id: UUID("a85fd57a-1ad0-4bfe-97f9-83aad17f1925"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("48"),
+      microsecs_running: Long("48716640"),
+      op: 'query',
+      ns: 'req-data-prod.Requests',
+      command: {
+        find: 'Requests',
+        filter: {
+          'Fleet._id': Binary(Buffer.from("8af3f28e1a8529438966d20cdf93f892", "hex"), 3),
+          '$or': [
+            { 'Contract.Number': /^TMAH381DGNJ128364$/i },
+            { 'Contract.Vehicle.Vin': 'TMAH381DGNJ128364' }
+          ],
+          Status: { '$in': [ 20, 30, 80, 60 ] }
+        },
+        sort: { 'EventDetails.SupplyDate': -1 },
+        limit: 1,
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("a85fd57a-1ad0-4bfe-97f9-83aad17f1925") }
+      },
+      numYields: 3120,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("3121") } },
+        Mutex: { acquireCount: { r: Long("1") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409602',
+      connectionId: 24409602,
+      client: '10.244.7.135:42630',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.700+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275047,
+      lsid: {
+        id: UUID("352454f5-bd5b-444e-84ea-e76c2722a59e"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("18"),
+      microsecs_running: Long("18191371"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("8af3f28e1a8529438966d20cdf93f892", "hex"), 3)
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', TotalRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("352454f5-bd5b-444e-84ea-e76c2722a59e") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 1120,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("1133") } },
+        Mutex: { acquireCount: { r: Long("13") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409393',
+      connectionId: 24409393,
+      client: '10.244.8.32:47324',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.700+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390274558,
+      lsid: {
+        id: UUID("d94d189e-d0c0-48ba-98d3-133c2d9f68a4"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("32"),
+      microsecs_running: Long("32196889"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("8af3f28e1a8529438966d20cdf93f892", "hex"), 3)
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', TotalRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("d94d189e-d0c0-48ba-98d3-133c2d9f68a4") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 1811,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("1829") } },
+        Mutex: { acquireCount: { r: Long("18") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn23824510',
+      connectionId: 23824510,
+      client: '10.244.8.158:60992',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.29.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.21'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      threaded: true,
+      opid: 390275428,
+      secs_running: Long("6"),
+      microsecs_running: Long("6580234"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: 1,
+        helloOk: true,
+        topologyVersion: {
+          processId: ObjectId("6868d36162b15988d87b6012"),
+          counter: Long("0")
+        },
+        maxAwaitTimeMS: Long("10000"),
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2026-01-05T10:59:28.220Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409663',
+      connectionId: 24409663,
+      client: '10.244.8.157:47346',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390274610,
+      lsid: {
+        id: UUID("e1f9ac94-60d2-4838-b8f7-54e5e9591b99"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("30"),
+      microsecs_running: Long("30184411"),
+      op: 'query',
+      ns: 'req-data-prod.Requests',
+      command: {
+        find: 'Requests',
+        filter: {
+          'Fleet._id': Binary(Buffer.from("8af3f28e1a8529438966d20cdf93f892", "hex"), 3),
+          '$or': [
+            { 'Contract.Number': /^W1NKM0FB4SF330240$/i },
+            { 'Contract.Vehicle.Vin': 'W1NKM0FB4SF330240' }
+          ],
+          Status: { '$in': [ 30, 60 ] }
+        },
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("e1f9ac94-60d2-4838-b8f7-54e5e9591b99") }
+      },
+      numYields: 2489,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("2490") } },
+        Mutex: { acquireCount: { r: Long("1") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409716',
+      connectionId: 24409716,
+      client: '10.244.4.138:42470',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275403,
+      lsid: {
+        id: UUID("8700ebfb-d92d-4907-8e11-5e0cb6897855"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("7"),
+      microsecs_running: Long("7163898"),
+      op: 'query',
+      ns: 'req-data-prod.Requests',
+      command: {
+        find: 'Requests',
+        filter: {
+          'Fleet._id': Binary(Buffer.from("cda5905a0de46e4583d1600511683f7f", "hex"), 3),
+          '$or': [
+            { 'Contract.Number': /^2024017007$/i },
+            { 'Contract.Vehicle.Vin': 'WV1ZZZEB5PH024985' }
+          ],
+          Status: { '$in': [ 30, 60 ] },
+          'EventDetails.SupplyDate': { '$lt': Long("1767600000") }
+        },
+        sort: { 'EventDetails.SupplyDate': -1 },
+        limit: 1,
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("8700ebfb-d92d-4907-8e11-5e0cb6897855") }
+      },
+      numYields: 384,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("385") } },
+        Mutex: { acquireCount: { r: Long("1") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409698',
+      connectionId: 24409698,
+      client: '10.244.7.135:59140',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275046,
+      lsid: {
+        id: UUID("b4907df1-b774-443a-b8aa-9ce8feefd407"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("18"),
+      microsecs_running: Long("18192062"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("8af3f28e1a8529438966d20cdf93f892", "hex"), 3),
+              '$or': [Array]
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', CurrentRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("b4907df1-b774-443a-b8aa-9ce8feefd407") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 1068,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("1081") } },
+        Mutex: { acquireCount: { r: Long("13") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24233703',
+      connectionId: 24233703,
+      client: '10.244.4.170:34476',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.29.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.21'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      threaded: true,
+      opid: 390275429,
+      secs_running: Long("6"),
+      microsecs_running: Long("6564275"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: 1,
+        helloOk: true,
+        topologyVersion: {
+          processId: ObjectId("6868d36162b15988d87b6012"),
+          counter: Long("0")
+        },
+        maxAwaitTimeMS: Long("10000"),
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2026-01-05T10:59:28.236Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24233679',
+      connectionId: 24233679,
+      client: '10.244.7.136:60120',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      threaded: true,
+      opid: 390275327,
+      secs_running: Long("8"),
+      microsecs_running: Long("8870965"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: 1,
+        helloOk: true,
+        topologyVersion: {
+          processId: ObjectId("6868d36162b15988d87b6012"),
+          counter: Long("0")
+        },
+        maxAwaitTimeMS: Long("10000"),
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2026-01-05T10:59:25.930Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24406814',
+      connectionId: 24406814,
+      client: '10.244.7.147:43036',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.29.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.21'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      threaded: true,
+      opid: 390275335,
+      secs_running: Long("8"),
+      microsecs_running: Long("8534715"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: 1,
+        helloOk: true,
+        topologyVersion: {
+          processId: ObjectId("6868d36162b15988d87b6012"),
+          counter: Long("0")
+        },
+        maxAwaitTimeMS: Long("10000"),
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2026-01-05T10:59:26.266Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409507',
+      connectionId: 24409507,
+      client: '10.244.4.138:54470',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275424,
+      lsid: {
+        id: UUID("9c6765d0-586f-4b20-9752-d849b53a2ed0"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("6"),
+      microsecs_running: Long("6640356"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("cda5905a0de46e4583d1600511683f7f", "hex"), 3)
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', TotalRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("9c6765d0-586f-4b20-9752-d849b53a2ed0") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 392,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("398") } },
+        Mutex: { acquireCount: { r: Long("6") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409739',
+      connectionId: 24409739,
+      client: '10.244.8.32:59204',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275039,
+      lsid: {
+        id: UUID("4bca91a2-d55d-49a6-b357-b2d6699b1179"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("18"),
+      microsecs_running: Long("18361767"),
+      op: 'query',
+      ns: 'req-data-prod.Requests',
+      command: {
+        find: 'Requests',
+        filter: {
+          'Fleet._id': Binary(Buffer.from("71fb774d138f434899e2223e8856ff4e", "hex"), 3),
+          'Fleet.IsDeleted': false,
+          DossierNumber: '202600062830',
+          'Workshop._id': {
+            '$ne': Binary(Buffer.from("abfabda1b7b3a848a6d20ec782e1c50d", "hex"), 3)
+          }
+        },
+        collation: { locale: 'fr', strength: 1 },
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("4bca91a2-d55d-49a6-b357-b2d6699b1179") }
+      },
+      numYields: 1049,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("1050") } },
+        Mutex: { acquireCount: { r: Long("1") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409603',
+      connectionId: 24409603,
+      client: '10.244.7.135:42638',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390273814,
+      lsid: {
+        id: UUID("e971a816-69be-46be-99fb-11673f2a1f56"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("50"),
+      microsecs_running: Long("50512148"),
+      op: 'query',
+      ns: 'req-data-prod.Requests',
+      command: {
+        find: 'Requests',
+        filter: {
+          'Fleet._id': Binary(Buffer.from("71fb774d138f434899e2223e8856ff4e", "hex"), 3),
+          'Fleet.IsDeleted': false,
+          DossierNumber: '202600062851',
+          'Workshop._id': {
+            '$ne': Binary(Buffer.from("5752366755e47948931301ffed286c5f", "hex"), 3)
+          }
+        },
+        collation: { locale: 'fr', strength: 1 },
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("e971a816-69be-46be-99fb-11673f2a1f56") }
+      },
+      numYields: 2619,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("2620") } },
+        Mutex: { acquireCount: { r: Long("1") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn23595246',
+      connectionId: 23595246,
+      client: '10.244.4.132:57094',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.29.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.22'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      threaded: true,
+      opid: 390275324,
+      secs_running: Long("8"),
+      microsecs_running: Long("8964349"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: 1,
+        helloOk: true,
+        topologyVersion: {
+          processId: ObjectId("6868d36162b15988d87b6012"),
+          counter: Long("0")
+        },
+        maxAwaitTimeMS: Long("10000"),
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2026-01-05T10:59:25.836Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409699',
+      connectionId: 24409699,
+      client: '10.244.7.135:59154',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390274514,
+      lsid: {
+        id: UUID("512ca4d6-8166-412e-b6e2-0733d3925539"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("33"),
+      microsecs_running: Long("33296808"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("8af3f28e1a8529438966d20cdf93f892", "hex"), 3)
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', TotalRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("512ca4d6-8166-412e-b6e2-0733d3925539") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 1855,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("1873") } },
+        Mutex: { acquireCount: { r: Long("18") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409666',
+      connectionId: 24409666,
+      client: '10.244.4.138:46672',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275178,
+      lsid: {
+        id: UUID("420745ae-868c-498c-91c3-4c44bee631a5"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("14"),
+      microsecs_running: Long("14364844"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("cda5905a0de46e4583d1600511683f7f", "hex"), 3),
+              '$or': [Array]
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', CurrentRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("420745ae-868c-498c-91c3-4c44bee631a5") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 819,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("827") } },
+        Mutex: { acquireCount: { r: Long("8") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn23814679',
+      connectionId: 23814679,
+      client: '10.244.8.157:59294',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      threaded: true,
+      opid: 390275331,
+      secs_running: Long("8"),
+      microsecs_running: Long("8695978"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: 1,
+        helloOk: true,
+        topologyVersion: {
+          processId: ObjectId("6868d36162b15988d87b6012"),
+          counter: Long("0")
+        },
+        maxAwaitTimeMS: Long("10000"),
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2026-01-05T10:59:26.105Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409735',
+      connectionId: 24409735,
+      client: '10.244.8.32:59178',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390274437,
+      lsid: {
+        id: UUID("749ad4b9-ec8c-4ba3-9e5a-284a1818ca6c"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("35"),
+      microsecs_running: Long("35889722"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("8af3f28e1a8529438966d20cdf93f892", "hex"), 3)
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', TotalRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("749ad4b9-ec8c-4ba3-9e5a-284a1818ca6c") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 1940,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("1958") } },
+        Mutex: { acquireCount: { r: Long("18") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409702',
+      connectionId: 24409702,
+      client: '10.244.7.136:35492',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390274100,
+      lsid: {
+        id: UUID("64eb07d3-4903-4f59-8e05-0197afc0ea16"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("44"),
+      microsecs_running: Long("44731658"),
+      op: 'query',
+      ns: 'req-data-prod.Requests',
+      command: {
+        find: 'Requests',
+        filter: {
+          'Fleet._id': Binary(Buffer.from("71fb774d138f434899e2223e8856ff4e", "hex"), 3),
+          'Fleet.IsDeleted': false,
+          DossierNumber: '202600062910',
+          'Workshop._id': {
+            '$ne': Binary(Buffer.from("dc5e5a0a9fbdf840b8f5c3548b848297", "hex"), 3)
+          }
+        },
+        collation: { locale: 'fr', strength: 1 },
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("64eb07d3-4903-4f59-8e05-0197afc0ea16") }
+      },
+      numYields: 2395,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("2396") } },
+        Mutex: { acquireCount: { r: Long("1") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24233696',
+      connectionId: 24233696,
+      client: '10.244.8.25:57988',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.29.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.22'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      threaded: true,
+      opid: 390275321,
+      secs_running: Long("9"),
+      microsecs_running: Long("9184460"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: 1,
+        helloOk: true,
+        topologyVersion: {
+          processId: ObjectId("6868d36162b15988d87b6012"),
+          counter: Long("0")
+        },
+        maxAwaitTimeMS: Long("10000"),
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2026-01-05T10:59:25.616Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24233678',
+      connectionId: 24233678,
+      client: '10.244.8.32:55256',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      threaded: true,
+      opid: 390275376,
+      secs_running: Long("7"),
+      microsecs_running: Long("7740582"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: 1,
+        helloOk: true,
+        topologyVersion: {
+          processId: ObjectId("6868d36162b15988d87b6012"),
+          counter: Long("0")
+        },
+        maxAwaitTimeMS: Long("10000"),
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2026-01-05T10:59:27.060Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409497',
+      connectionId: 24409497,
+      client: '10.244.4.138:54432',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275172,
+      lsid: {
+        id: UUID("c8103a36-5400-482b-a3c6-d1024f2ea721"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("14"),
+      microsecs_running: Long("14372626"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("cda5905a0de46e4583d1600511683f7f", "hex"), 3)
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', TotalRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("c8103a36-5400-482b-a3c6-d1024f2ea721") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 830,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("838") } },
+        Mutex: { acquireCount: { r: Long("8") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409708',
+      connectionId: 24409708,
+      client: '10.244.4.138:42424',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390275423,
+      lsid: {
+        id: UUID("9147afa3-2f50-41ef-9fed-3acfcddcc7ab"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("6"),
+      microsecs_running: Long("6673433"),
+      op: 'command',
+      ns: 'req-data-prod.Requests',
+      command: {
+        aggregate: 'Requests',
+        pipeline: [
+          {
+            '$match': {
+              'Fleet.IsDeleted': false,
+              'Fleet._id': Binary(Buffer.from("cda5905a0de46e4583d1600511683f7f", "hex"), 3),
+              '$or': [Array]
+            }
+          },
+          { '$group': { _id: '$Status', __agg0: [Object] } },
+          {
+            '$project': { Status: '$_id', CurrentRecords: '$__agg0', _id: 0 }
+          }
+        ],
+        hint: 'jobsFleetOverviewCountIndex',
+        cursor: {},
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("9147afa3-2f50-41ef-9fed-3acfcddcc7ab") }
+      },
+      planSummary: 'IXSCAN { Fleet._id: 1, AssignedUser._id: 1, Status: 1, UnreadChatMessagesForFleet: 1, InvoiceCount: 1, ReplacementCar: 1, SearchTerm: 1, LastUpdate: -1, Calculation.TotalNetSum: -1 }',
+      numYields: 346,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("352") } },
+        Mutex: { acquireCount: { r: Long("6") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    },
+    {
+      type: 'op',
+      host: 'mongodb:27017',
+      desc: 'conn24409715',
+      connectionId: 24409715,
+      client: '10.244.4.138:42468',
+      clientMetadata: {
+        driver: { name: 'mongo-csharp-driver', version: '2.28.0' },
+        os: {
+          type: 'Linux',
+          name: 'Debian GNU/Linux 12 (bookworm)',
+          architecture: 'x86_64'
+        },
+        platform: '.NET 8.0.8'
+      },
+      active: true,
+      currentOpTime: '2026-01-05T10:59:34.701+00:00',
+      effectiveUsers: [ { user: 'svc_Microservices', db: 'admin' } ],
+      threaded: true,
+      opid: 390274613,
+      lsid: {
+        id: UUID("ecb6d5e8-89fc-4fc0-aae2-825c6f18ca94"),
+        uid: Binary(Buffer.from("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "hex"), 0)
+      },
+      secs_running: Long("29"),
+      microsecs_running: Long("29990282"),
+      op: 'query',
+      ns: 'req-data-prod.Requests',
+      command: {
+        find: 'Requests',
+        filter: {
+          'Fleet._id': Binary(Buffer.from("8af3f28e1a8529438966d20cdf93f892", "hex"), 3),
+          '$or': [
+            { 'Contract.Number': /^W1NKM0FB4SF330240$/i },
+            { 'Contract.Vehicle.Vin': 'W1NKM0FB4SF330240' }
+          ],
+          Status: { '$in': [ 30, 60 ] }
+        },
+        '$db': 'req-data-prod',
+        lsid: { id: UUID("ecb6d5e8-89fc-4fc0-aae2-825c6f18ca94") }
+      },
+      numYields: 2495,
+      locks: { Global: 'r' },
+      waitingForLock: false,
+      lockStats: {
+        Global: { acquireCount: { r: Long("2496") } },
+        Mutex: { acquireCount: { r: Long("1") } }
+      },
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    }
+  ],
+  ok: 1

@@ -43,14 +43,14 @@ $user_details = $this->user_model->get_user($this->session->userdata('user_id'))
                         <?php include 'cart_items.php'; ?>
                     </div>
 
-                    <div class="menu-icon-box">
+<!--                     <div class="menu-icon-box">
                         <div class="icon">
                             <a href="<?php echo site_url('home/my_messages'); ?>">
                                 <i class="far fa-envelope"></i>
                                 <span id="message_count_badge" class="badge badge-danger" style="position: absolute; top: 10px; right: -5px; display: none; border-radius: 50%; padding: 3px 6px; font-size: 10px;">0</span>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="user-box menu-icon-box">
                         <div class="icon">
                             <a href="javascript::">

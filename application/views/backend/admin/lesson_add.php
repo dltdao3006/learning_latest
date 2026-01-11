@@ -3,6 +3,7 @@
 $course_details = $this->crud_model->get_course_by_id($param2)->row_array();
 $sections = $this->crud_model->get_section('course', $param2)->result_array();
 ?>
+
 <form action="<?php echo site_url('admin/lessons/'.$param2.'/add'); ?>" method="post" enctype="multipart/form-data">
 
     <div class="form-group">

@@ -7,17 +7,16 @@
             <div class="col">
                 <h1 class="page-title"><?php echo get_phrase('my_courses'); ?></h1>
                 <ul>
-                  <li><a href="<?php echo site_url('home/my_courses'); ?>"><?php echo get_phrase('all_courses'); ?></a></li>
-                  <li><a href="<?php echo site_url('home/my_wishlist'); ?>"><?php echo get_phrase('wishlists'); ?></a></li>
-                  <li class="active"><a href="<?php echo site_url('home/my_messages'); ?>"><?php echo get_phrase('my_messages'); ?></a></li>
-                  <li><a href="<?php echo site_url('home/purchase_history'); ?>"><?php echo get_phrase('purchase_history'); ?></a></li>
-                  <li><a href="<?php echo site_url('home/profile/user_profile'); ?>"><?php echo get_phrase('user_profile'); ?></a></li>
+                    <li><a href="<?php echo site_url('home/my_courses'); ?>"><?php echo get_phrase('all_courses'); ?></a></li>
+                    <li><a href="<?php echo site_url('home/my_wishlist'); ?>"><?php echo get_phrase('wishlists'); ?></a></li>
+                    <li class="active"><a href="<?php echo site_url('home/my_messages'); ?>"><?php echo get_phrase('my_messages'); ?></a></li>
+                    <li><a href="<?php echo site_url('home/purchase_history'); ?>"><?php echo get_phrase('purchase_history'); ?></a></li>
+                    <li><a href="<?php echo site_url('home/profile/user_profile'); ?>"><?php echo get_phrase('user_profile'); ?></a></li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
-
 
 <section class="message-area">
     <div class="container">
@@ -27,19 +26,16 @@
                     <button class="btn compose-btn" type="button" id="NewMessage" onclick="NewMessage(event)">Compose</button>
                     <hr>
                     <ul class="message-sender-list">
-
                         <?php
                         $current_user = $this->session->userdata('user_id');
                         $this->db->where('sender', $current_user);
                         $this->db->or_where('receiver', $current_user);
                         $message_threads = $this->db->get('message_thread')->result_array();
                         foreach ($message_threads as $row):
-
-                            // defining the user to show
                             if ($row['sender'] == $current_user)
-                            $user_to_show_id = $row['receiver'];
+                                $user_to_show_id = $row['receiver'];
                             if ($row['receiver'] == $current_user)
-                            $user_to_show_id = $row['sender'];
+                                $user_to_show_id = $row['sender'];
 
                             $last_messages_details =  $this->crud_model->get_last_message_by_message_thread_code($row['message_thread_code'])->row_array();
                             ?>
@@ -71,124 +67,147 @@
                 </div>
             </div>
             <div class="col-lg-7">
-                <div class="message-details-box" id = "toggle-1">
+                <div class="message-details-box" id="toggle-1">
                     <?php include 'inner_messages.php'; ?>
                 </div>
-                <div class="message-details-box" id = "toggle-2" style="display: none;">
-                    <div class="new-message-details"><div class="message-header">
-                        <div class="sender-info">
-                            <span class="d-inline-block">
-                                <i class="far fa-user"></i>
-                            </span>
-                            <span class="d-inline-block"><?php echo get_phrase('new_message'); ?></span>
+                <div class="message-details-box" id="toggle-2" style="display: none;">
+                    <div class="new-message-details">
+                        <div class="message-header">
+                            <div class="sender-info">
+                                <span class="d-inline-block">
+                                    <i class="far fa-user"></i>
+                                </span>
+                                <span class="d-inline-block"><?php echo get_phrase('new_message'); ?></span>
+                            </div>
                         </div>
+                        <form class="" action="<?php echo site_url('home/my_messages/send_new'); ?>" method="post">
+                            <div class="message-body">
+                                <div class="form-group">
+                                    <select class="form-control select2" name="receiver">
+                                        <optgroup label="Quan ly">
+                                            <?php
+                                            $this->db->where('role_id', 3);
+                                            $mods = $this->db->get('users')->result_array();
+                                            foreach ($mods as $mod):
+                                                if ($mod['id'] == $this->session->userdata('user_id')) continue;
+                                            ?>
+                                                <option value="<?php echo $mod['id']; ?>">
+                                                    <?php echo $mod['first_name'].' '.$mod['last_name']; ?> (Mod)
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="message" class="form-control"></textarea>
+                                </div>
+                                <button type="submit" class="btn send-btn"><?php echo get_phrase('send'); ?></button>
+                                <button type="button" class="btn cancel-btn" onclick="CancelNewMessage(event)">Cancel</button>
+                            </div>
+                        </form>
                     </div>
-                    <form class="" action="<?php echo site_url('home/my_messages/send_new'); ?>" method="post">
-                        <div class="message-body">
-                            <div class="form-group">
-                                <select class="form-control select2" name="receiver">
-<!--                                     <optgroup label="<?php echo get_phrase('instructors'); ?>">
-                                        <?php
-                                        $instructor_list = $this->user_model->get_instructor_list()->result_array();
-                                        foreach ($instructor_list as $instructor):
-                                            if ($instructor['id'] == $this->session->userdata('user_id')) continue;
-                                        ?>
-                                            <option value="<?php echo $instructor['id']; ?>">
-                                                <?php echo $instructor['first_name'].' '.$instructor['last_name']; ?> (Admin/Instructor)
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </optgroup> -->
-
-                                    <optgroup label="Quan ly">
-                                        <?php
-                                        // Lấy tất cả user có role_id = 3
-                                        $this->db->where('role_id', 3);
-                                        $mods = $this->db->get('users')->result_array();
-                                        foreach ($mods as $mod):
-                                            if ($mod['id'] == $this->session->userdata('user_id')) continue;
-                                        ?>
-                                            <option value="<?php echo $mod['id']; ?>">
-                                                <?php echo $mod['first_name'].' '.$mod['last_name']; ?> (Mod)
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </optgroup>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <textarea name="message" class="form-control"></textarea>
-                            </div>
-                            <button type="submit" class="btn send-btn"><?php echo get_phrase('send'); ?></button>
-                            <button type="button" class="btn cancel-btn" onclick = "CancelNewMessage(event)">Cancel</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </section>
-<script type="text/javascript">
-function NewMessage(e){
-
-    e.preventDefault();
-    $('#toggle-1').hide();
-    $('#toggle-2').show();
-    $('#NewMessage').removeAttr('onclick');
-}
-
-function CancelNewMessage(e){
-
-    e.preventDefault();
-    $('#toggle-2').hide();
-    $('#toggle-1').show();
-
-    $('#NewMessage').attr('onclick','NewMessage(event)');
-}
-</script>
 
 <script type="text/javascript">
+    // Biến lưu mã cuộc trò chuyện hiện tại
+    var current_thread_code = "<?php echo isset($message_thread_code) ? $message_thread_code : ''; ?>";
+
+    function NewMessage(e){
+        e.preventDefault();
+        $('#toggle-1').hide();
+        $('#toggle-2').show();
+        $('#NewMessage').attr('onclick', 'CancelNewMessage(event)');
+        $('#NewMessage').text('Cancel');
+    }
+
+    function CancelNewMessage(e){
+        e.preventDefault();
+        $('#toggle-2').hide();
+        $('#toggle-1').show();
+        $('#NewMessage').attr('onclick', 'NewMessage(event)');
+        $('#NewMessage').text('Compose');
+    }
+
+    function scrollToBottom() {
+        var chatContainer = $('.message-content'); 
+        if (chatContainer.length > 0) {
+            chatContainer.scrollTop(chatContainer[0].scrollHeight);
+        }
+    }
+
     $(document).ready(function() {
-        // Biến lưu mã cuộc trò chuyện hiện tại (Lấy từ PHP nếu đang mở tin nhắn)
-        var current_thread_code = "<?php echo isset($message_thread_code) ? $message_thread_code : ''; ?>";
+        scrollToBottom();
 
-        // 1. Hàm cuộn xuống dưới cùng
-        function scrollToBottom() {
-            // Tìm khung chứa tin nhắn (Class này có thể khác tùy theme, hãy kiểm tra lại bằng F12)
-            var msgContainer = $('.message-details'); 
-            if(msgContainer.length > 0) {
-                // Cuộn xuống
-                $('html, body').animate({
-                    scrollTop: msgContainer.offset().top + msgContainer.height()
-                }, 100);
-            }
-        }
+        // XỬ LÝ GỬI TIN NHẮN VÀ FIX LỖI MẤT KHUNG CHAT
+        $(document).on('submit', '.message-footer form', function(e) {
+            e.preventDefault(); 
+            var form = $(this);
+            var url = form.attr('action');
+            var message = form.find('textarea').val();
+            
+            if(message.trim() === "") return;
 
-        // Chạy cuộn trang khi mới vào
-        if (current_thread_code != "") {
-            scrollToBottom();
-        }
-
-        // 2. Chức năng Real-time giả lập (Polling 3 giây)
-        if (current_thread_code != "") {
-            setInterval(function() {
-            var current_thread_code = "<?php echo $current_message_thread_code; ?>";
             $.ajax({
-                url: "<?php echo site_url('home/my_messages/read_message/'); ?>" + current_thread_code,
+                url: url,
+                type: 'POST',
+                data: {message: message},
                 success: function(response) {
-                    // 1. Lấy nội dung tin nhắn mới
-                    var newMessages = $(response).find('.conversation-list').html();
+                    form.find('textarea').val(''); // Xóa text đã nhập
                     
-                    // 2. Cập nhật vào khung chat
-                    var chatList = $('.conversation-list');
-                    chatList.html(newMessages);
-                    
-                    // 3. QUAN TRỌNG: Cuộn xuống dưới cùng ngay lập tức
-                    if(chatList.length > 0) {
-                        chatList.scrollTop(chatList[0].scrollHeight);
-                    }
+                    // URL để đọc lại tin nhắn
+                    var readUrl = url.replace('send_reply', 'read_message');
+
+                    // Gọi AJAX lấy nội dung mới
+                    $.ajax({
+                        url: readUrl,
+                        success: function(response) {
+                            // --- ĐÂY LÀ PHẦN SỬA LỖI ---
+                            // 1. Cố gắng tìm đúng phần nội dung tin nhắn trong phản hồi
+                            var newContent = $(response).find('.message-details').html();
+                            
+                            // 2. Nếu tìm thấy (tức là server trả về cả trang), chỉ lấy phần .message-details
+                            if (newContent) {
+                                // Cập nhật nội dung bên trong div.message-details hiện tại
+                                $('.message-details').html(newContent);
+                            } else {
+                                // 3. Nếu server trả về partial view (chỉ có inner_messages), dùng luôn response
+                                // Kiểm tra xem response có chứa thẻ div message-details không để thay thế cho đúng
+                                if($(response).hasClass('message-details') || response.indexOf('class="message-details"') !== -1){
+                                     $('#toggle-1').html(response);
+                                } else {
+                                     // Trường hợp dự phòng khác
+                                     $('#toggle-1').html(response);
+                                }
+                            }
+                            
+                            scrollToBottom(); // Cuộn xuống cuối
+                        }
+                    });
                 }
             });
-        }, 3000);
+        });
+
+        // Tự động đồng bộ tin nhắn (Real-time polling 3 giây/lần)
+        if (current_thread_code !== "") {
+            setInterval(function() {
+                $.ajax({
+                    url: '<?php echo site_url('home/my_messages/read_message/'); ?>' + current_thread_code,
+                    success: function(response) {
+                        // Logic tương tự: Chỉ lấy nội dung tin nhắn, bỏ qua header/footer thừa
+                        var newMessages = $(response).find('.message-content').html();
+                        
+                        if (newMessages) {
+                             // Chỉ thay thế phần danh sách tin nhắn (giữ nguyên header & footer form)
+                             $('.message-content').html(newMessages);
+                             scrollToBottom();
+                        }
+                    }
+                });
+            }, 3000);
         }
     });
 </script>
